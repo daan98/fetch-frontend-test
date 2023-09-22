@@ -2,17 +2,34 @@ import React, {useState, useEffect} from 'react';
 
 // Files created or added manually (with no package dependencies)
 import { EmailInterface } from '../interface';
+import { doLogin } from '../api';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props : any) => {
+
+  const { setLoginStatus } = props;
 
   const [formFields, setFormFields] = useState<EmailInterface>({
-    username: '',
+    name: '',
     email: ''
   });
+  const [isError, setIsError] = useState<boolean>(false);
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
 
-  const handleOnsubmit = (e : any) => {
+  const handleOnsubmit = async (e : any) => {
     e.preventDefault();
-    console.log('handleOnsubmit :)');
+    const status : number = await doLogin(apiUrl, formFields);
+
+    if (status === 200) {
+      setIsError(false);
+      localStorage.setItem('status', `200`);
+      navigate("/dogs");
+      return;
+    }
+
+    setIsError(true);
+    localStorage.setItem('status', `${status}`);
   };
 
   return (
@@ -32,17 +49,20 @@ const Login = () => {
       >
         <div className="flex flex-col gap-y-2">
           <label
-            htmlFor="username"
+            htmlFor="name"
             className="text-[16px] font-bold"
           >
-            Username
+            name
           </label>
 
           <input
             type="text"
-            placeholder="type your Username..."
-            id="username"
+            placeholder="type your name..."
+            id="name"
+            name="name"
             className="rounded-lg py-1 px-3"
+            value={formFields.name}
+            onChange={(e : any) => setFormFields({...formFields, [e.target.name]: e.target.value})}
           />
         </div>
 
@@ -60,9 +80,26 @@ const Login = () => {
             type="email"
             placeholder="type your Email..."
             id="email"
+            name="email"
             className="rounded-lg py-1 px-3"
+            value={formFields.email}
+            onChange={(e : any) => setFormFields({...formFields, [e.target.name]: e.target.value})}
           />
         </div>
+
+        {isError ? 
+          <div 
+            className="flex flex-col gap-y-2"
+          >
+            <h1
+              className="text-[20px] font-bold uppercase text-center text-red-600"
+            >
+                There was an error, please try again
+            </h1>
+          </div>
+          :
+          null
+        }
 
         <div className="text-center">
           <button

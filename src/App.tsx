@@ -1,13 +1,28 @@
 import { useState } from 'react';
-import { Login, SearchPage } from './components';
+import { Routes, BrowserRouter, Route } from 'react-router-dom';
+
+import {
+  Login,
+  SearchPage,
+  Footer,
+  PrivateRoute
+} from './components';
 
 function App() {
-
+  const [loginStatus, setLoginStatus] = useState(0);
   return (
-    <>
-      <Login/>
-      <SearchPage />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={ <Login setLoginStatus={setLoginStatus} /> } />
+
+        <Route
+          path="/dogs"
+          element={ <PrivateRoute status={ loginStatus } /> }
+        />
+
+        <Route path="/dogs" element={ <SearchPage /> }></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

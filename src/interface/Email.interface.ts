@@ -1,4 +1,4 @@
 export default interface EmailInterface {
-    username: string;
+    name: string;
     email: string;
 };

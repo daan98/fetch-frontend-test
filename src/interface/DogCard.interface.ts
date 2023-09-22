@@ -1,4 +1,5 @@
 export default interface DogCardInterface {
+    index:        number;
     img:          string;
     name:         string;
     age:          number;
