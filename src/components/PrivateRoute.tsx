@@ -11,7 +11,7 @@ const useAuth = () => {
 };
 
 const PrivateRoute = (props : any) => {
-  const { children, status } = props;
+  const { children } = props;
 
   const auth = useAuth();
   console.log('PrivateRoute status: ', status);
@@ -22,7 +22,9 @@ const PrivateRoute = (props : any) => {
   } */
 
   
-  return auth ? <Navigate to="/dogs" replace /> : <Navigate to="/" replace />
+  return (
+    auth ? children : <Navigate to="/" replace />
+  );
 };
 
 export default PrivateRoute;

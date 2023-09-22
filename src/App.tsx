@@ -17,10 +17,12 @@ function App() {
 
         <Route
           path="/dogs"
-          element={ <PrivateRoute status={ loginStatus } /> }
+          element={
+            <PrivateRoute>
+              <SearchPage />
+            </PrivateRoute>
+          }
         />
-
-        <Route path="/dogs" element={ <SearchPage /> }></Route>
       </Routes>
     </BrowserRouter>
   )

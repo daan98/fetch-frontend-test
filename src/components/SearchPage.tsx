@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as filledHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 // Files created or added manually (with no package dependencies)
 import { dogImg } from '../assets/img';
-import { DogCard, Filter, Footer } from '.';
+import { DogCard, Filter, Footer, Header, Match } from '.'
 
 /* 
     img: string      - DONE - 
@@ -88,6 +89,9 @@ const SearchPage = () => {
         <>
             <div className="px-2 py-6 flex gap-3 md:px-6">
                 <div className="">
+                    <Header />
+
+                    <Match />
                     <h1
                         className="text-2xl text-secondary font-bold uppercase  text-center md:text-3xl"
                     >
@@ -95,6 +99,13 @@ const SearchPage = () => {
                     </h1>
 
                     <Filter />
+
+                    <button
+                        type="button"
+                        className="bg-secondary px-6 py-2 rounded-full font-bold duration-300 ease-in-out transition-all flex gap-2 flex-wrap items-center mx-auto my-0 hover:bg-secondaryHover hover:text-white hover:duration-300 hover:ease-in-out hover:transition-all"
+                    >
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
                     
                     <div className="flex gap-10 flex-wrap justify-center py-10 ">
                         {/* <DogCard

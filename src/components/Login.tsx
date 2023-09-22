@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 // Files created or added manually (with no package dependencies)
 import { EmailInterface } from '../interface';
 import { doLogin } from '../api';
-import { useNavigate } from 'react-router-dom';
 
 const Login = (props : any) => {
 
@@ -15,7 +14,6 @@ const Login = (props : any) => {
   });
   const [isError, setIsError] = useState<boolean>(false);
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  const navigate = useNavigate();
 
   const handleOnsubmit = async (e : any) => {
     e.preventDefault();
@@ -23,8 +21,9 @@ const Login = (props : any) => {
 
     if (status === 200) {
       setIsError(false);
-      localStorage.setItem('status', `200`);
-      navigate("/dogs");
+      localStorage.setItem('status', '200');
+      /* navigate("/dogs"); */
+      window.location.pathname = '/dogs'; 
       return;
     }
 
