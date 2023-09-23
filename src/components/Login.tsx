@@ -13,7 +13,7 @@ const Login = (props : any) => {
     email: ''
   });
   const [isError, setIsError] = useState<boolean>(false);
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const apiUrl : string = import.meta.env.VITE_API_BASE_URL;
 
   const handleOnsubmit = async (e : any) => {
     e.preventDefault();

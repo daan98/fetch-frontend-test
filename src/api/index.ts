@@ -47,7 +47,7 @@ const getBreeds = async (url : string) => {
             })
             .then((response) => response.json())
             .then((data) => {return data});
-        console.log('fetchedData: ', fetchedData);
+            
         return fetchedData
     } catch (error : any) {
         console.log('There was an error while getting breeds: ', error);
@@ -58,7 +58,7 @@ const getBreeds = async (url : string) => {
 const getDogSearch = async (url : string, breeds ?: Array<string>, zipCodes ?: Array<string>, ageMin ?: number, ageMax ?: number, sort ?: string) => {
     try {
         const fetchedData = await fetch(
-            `${url}/dogs/search?breeds=${breeds}&zipCodes=${zipCodes}&ageMin=${ageMin}&ageMax=${ageMax}&sort=field:[${sort}]`, {
+            sort ? `${url}/dogs/search?breeds=${breeds}&zipCodes=${zipCodes}&ageMin=${ageMin}&ageMax=${ageMax}&sort=field:[${sort}]` : `${url}/dogs/search?breeds=${breeds}&zipCodes=${zipCodes}&ageMin=${ageMin}&ageMax=${ageMax}`, {
                 credentials: "include",
                 method: "GET",
                 headers: {
@@ -67,7 +67,8 @@ const getDogSearch = async (url : string, breeds ?: Array<string>, zipCodes ?: A
             })
             .then((response) => response.json())
             .then((data) => {return data});
-        return 200
+        console.log('fetchedData: ', fetchedData);
+        /* return fetchedData */
     } catch (error : any) {
         console.log('There was an error while getting search result: ', error);
         return 400;
@@ -115,11 +116,36 @@ const postMatchDogs = async (url : string, dogsId : Array<string | null>) => {
     }
 };
 
+const getDogs = async (url : string) => {
+    try {
+        const fetchedData : any = await fetch(url, {
+            credentials: "include",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            })
+            .then((response) => {
+                console.log('response: ', response);
+                return response
+            })
+            .then((data) => {
+                console.log('data: ', data);
+                return data;
+            });
+        return fetchedData;
+    } catch (error : any) {
+        console.log('There was an error while posting matched dogs: ', error);
+        return 400;
+    }
+};
+
 export {
     doLogin,
     doLogout,
     getBreeds,
     getDogSearch,
     postDogs,
-    postMatchDogs
+    postMatchDogs,
+    getDogs
 }
